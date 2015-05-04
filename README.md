@@ -86,10 +86,10 @@ From the root directory of your project run
 ```
 	nodemon --exec babel-node -- --stage 1 --optional strict -- index.js --dir
 ```
-- PUT a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X PUT -d "HelloWrold"`
-- GET a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X GET`
-- POST to a file in the `--dir` path:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
-- DELETE a file in the `--dir` path: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
+- `PUT` a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X PUT -d "HelloWrold"`
+- `GET` a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X GET`
+- `POST` to a file in the `--dir` path:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
+- `DELETE` a file in the `--dir` path: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
 
 
 
@@ -98,9 +98,9 @@ From the root directory of your project run
 - Start the client using one of the steps mentioned above
 - All client files are synced to the `client-files` directory under root of this project if a `--dir` argument is not passed when starting the server.
 
-- PUT a file to the server : `curl -v http://127.0.0.1:8000/foo/bar.js -X PUT -d "HelloWrold"`
-- POST to a file on the server:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
-- DELETE a file from the server: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
+- `PUT` a file to the server : `curl -v http://127.0.0.1:8000/foo/bar.js -X PUT -d "HelloWrold"`
+- `POST` to a file on the server:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
+- `DELETE` a file from the server: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
 
 - You can also specify a `--dir` path to sync files to that folder when starting both client and server, see below
 
