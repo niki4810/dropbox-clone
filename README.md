@@ -41,12 +41,15 @@ From the root directory of your project run
 	curl -v http://127.0.0.1:8000/index.js -X GET
 ```
 
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-get-1.gif)
+
 ## Client can make HEAD request to get just the GET headers
 - To get the HEAD response, run
 
 ```
 	curl -v http://127.0.0.1:8000/ --head
 ```
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/server-head-1.gif)
 
 ## Client can make PUT requests to create new directories and files with content
 - To create a directory and a file with in it, run
@@ -60,12 +63,16 @@ From the root directory of your project run
 	curl -v http://127.0.0.1:8000/foo/baz/ -X PUT
 ```
 
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-put-1.gif)
+
 ## Client can make POST requests to update the contents of a file
 - To re-write contents of an existing file, run
 
 ```
 	curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "Some changed content"
 ```
+
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-post-1.gif)
 
 ## Client can make DELETE requests to delete files and folders
 
@@ -79,6 +86,10 @@ From the root directory of your project run
 ```
 	curl -v http://127.0.0.1:8000/foo/ -X DELETE
 ```
+
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-delete-1.gif)
+
+
 ## Server will serve from --dir or cwd as root
 - Instead of serving files from `cwd` you can pass in a `--dir` argument when starting server to GET, PUT, POST, and DELETE from the specified `--dir` path.
 - To start your server using `--dir` path run
@@ -87,10 +98,19 @@ From the root directory of your project run
 	nodemon --exec babel-node -- --stage 1 --optional strict -- index.js --dir
 ```
 - `PUT` a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X PUT -d "HelloWrold"`
+
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-put-2.gif)
+
 - `GET` a file in the `--dir` path : `curl -v http://127.0.0.1:8000/foo/bar.js -X GET`
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-get-2.gif)
+
 - `POST` to a file in the `--dir` path:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
+
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-post-2.gif)
+
 - `DELETE` a file in the `--dir` path: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
 
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/client-delete-2.gif)
 
 
 ## Client will sync from server over TCP to cwd or CLI dir argument (mainly PUT, POST, and DELETE requests)
@@ -102,6 +122,10 @@ From the root directory of your project run
 - `POST` to a file on the server:  `curl -v http://127.0.0.1:8000/foo/bar.js -X POST -d "asdfasdfa123"`
 - `DELETE` a file from the server: `curl -v http://127.0.0.1:8000/foo/bar.js -X DELETE`
 
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/server-client-sync-1.gif)
+
 - You can also specify a `--dir` path to sync files to that folder when starting both client and server, see below
+
+![alt tag](https://raw.githubusercontent.com/niki4810/dropbox-clone/master/demo-images/server-client-sync-2.gif)
 
 
