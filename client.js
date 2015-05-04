@@ -21,7 +21,9 @@ const TCP_EVENT_MAP = {
  'ack': 'CLIENT-ACK'
 }
 
-let tcpClient = new nssocket.NsSocket()
+let tcpClient = new nssocket.NsSocket({
+	reconnect: true
+})
 
 // Sync PUT request
 tcpClient.data([TCP_EVENT_MAP.create], (payload) =>{	
