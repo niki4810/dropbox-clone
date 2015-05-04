@@ -26,8 +26,9 @@ const TCP_EVENT_MAP = {
 
 let app = express()
 
-let tcpSocket;
+let tcpSocket
 let tcpServer = nssocket.createServer(function (socket) {   	
+	console.log(`Client connected on port ${TCP_PORT}`)
    	tcpSocket = socket
 
    	// log any acknowledgements from client to console   	
