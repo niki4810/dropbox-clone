@@ -38,6 +38,7 @@ tcpClient.data([TCP_EVENT_MAP.update], (payload) => {
 // SYNC DELETE request
 tcpClient.data([TCP_EVENT_MAP.remove], (payload) => {
 	async () => {	
+		logSocketReq(payload);
 		let filePath = path.resolve(path.join(ROOT_DIR, payload.path))
 		
 		if(payload.type === 'dir'){
@@ -58,7 +59,7 @@ function getDirPath(filePath, type) {
 	return dirPath;
 }
 
-function logSockectReq(payload) {
+function logSocketReq(payload) {
 	console.log(payload);
 }
 
@@ -68,7 +69,7 @@ function sendSuccessAck(actionType) {
 }
 
 async function writeDataToFile (payload) {
-	logSockectReq(payload);
+	logSocketReq(payload);
 	let filePath = path.resolve(path.join(ROOT_DIR, payload.path))
 	if(payload.action === 'create') {
 		let dirPath = getDirPath(filePath, payload.type)
