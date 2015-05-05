@@ -8,6 +8,9 @@ let rimraf = require('rimraf')
 let mkdirp = require('mkdirp')
 let argv = require('yargs').argv
 let nssocket = require('nssocket')
+let bodyParser = require('body-parser')
+let multer = require('multer') 
+let _ = require('lodash')
 
 // augment songbird
 require('songbird')
@@ -41,6 +44,10 @@ let tcpServer = nssocket.createServer(function (socket) {
 if(NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(multer()); // for parsing multipart/form-data
 
 app.listen(PORT, () => console.log(`LISTENING @ http://127.0.0.1:${PORT}`))
 
@@ -79,16 +86,21 @@ app.put('*', setFileMeta, setDirDetails, (req, res, next) => {
 
 		await mkdirp.promise(req.dirPath)
 
+		let bodyObj = req.body
+		let fileData
+		if(_.isObject(bodyObj)) {
+			fileData = _.keys(bodyObj)[0]
+		}	
+
 		if (!req.isDir) {
-			req.pipe(fs.createWriteStream(req.filePath))
+			if(fileData) {
+				await fs.promise.writeFile(req.filePath, fileData)
+			}	
 		}
 		
 		// if a client exists sync the data to client
-		if(tcpSocket) {
-			// TODO : Find if there is a better way to read the req content
-			// instead of reading from file :(
-			let data = await fs.promise.readFile(req.filePath, {encoding: 'base64'})
-			let payload = getTCPPayload('create', req.url, req.isDir, data)   	
+		if(tcpSocket) {		
+			let payload = getTCPPayload('create', req.url, req.isDir, fileData)   	
 			tcpSocket.send([TCP_EVENT_MAP.create], payload);
 		}
 		res.end()
@@ -101,14 +113,17 @@ app.post('*', setFileMeta, setDirDetails, (req, res, next) => {
 		if(req.isDir) return res.send(405, 'Path is a directory')
 						 
 		await fs.promise.truncate(req.filePath, 0)	
-		req.pipe(fs.createWriteStream(req.filePath))		
+		let bodyObj = req.body
+			let fileData
+			if(_.isObject(bodyObj)) {
+				fileData = _.keys(bodyObj)[0]
+		}	
 
-		// if a client exists sync the data to client
-		if(tcpSocket) {
-			// TODO : Find if there is a better way to read the req content
-			// instead of reading from file :(
-			let data = await fs.promise.readFile(req.filePath, {encoding: 'base64'})
-			let payload = getTCPPayload('update', req.url, req.isDir, data)   	
+		if(fileData) {
+			await fs.promise.writeFile(req.filePath, fileData)
+		}		
+		if(tcpSocket) {					
+			let payload = getTCPPayload('update', req.url, req.isDir, fileData)   	
 			tcpSocket.send([TCP_EVENT_MAP.update], payload);
 		}
 

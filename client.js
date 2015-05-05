@@ -80,9 +80,10 @@ async function writeDataToFile (payload) {
 		await fs.promise.truncate(filePath, 0)	
 	}
 	
-	if(payload.type === 'file') {
+	if(payload.type === 'file' && payload.contents !== null) {
+		console.log(payload.contents);
 		//write payload.contents to that filePath
-		await fs.promise.writeFile(filePath, payload.contents, {encoding: 'base64'});
+		await fs.promise.writeFile(filePath, payload.contents);
 	}
 	sendSuccessAck(payload.action)
 }	
